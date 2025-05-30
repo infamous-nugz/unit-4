@@ -4,20 +4,25 @@ using UnityEngine;
 public class SPAwnmanger : MonoBehaviour
 {
     public GameObject enemyPrefab;
-
+    public int enemyCount;
     private float spawnrange = 9;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-
-        Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+        SpawnEnemyWave(3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        enemyCount = FindFirstObjectByType<Enemy>().Length;
+    }
+
+    void SpawnEnemyWave(int EnemiesToSpawn)
+    {
+        for (int i = 0; i < EnemiesToSpawn; i++)
+
+            Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
     }
 
      private Vector3 GenerateSpawnPosition()
