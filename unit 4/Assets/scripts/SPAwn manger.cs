@@ -6,16 +6,25 @@ public class SPAwnmanger : MonoBehaviour
     public GameObject enemyPrefab;
     public int enemyCount;
     private float spawnrange = 9;
+    public int waveNumber = 1;
+    public GameObject poweruprefabs;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SpawnEnemyWave(3);
+        SpawnEnemyWave(waveNumber);
+        Instantiate(poweruprefabs, GenerateSpawnPosition(), poweruprefabs.transform.rotation);
     }
 
     // Update is called once per frame
     void Update()
     {
-        enemyCount = FindFirstObjectByType<Enemy>().Length;
+        enemyCount = FindObjectsByType<Enemy>(FindObjectsSortMode.InstanceID).Length;
+        if (enemyCount == 0)
+        {
+            waveNumber++;
+            SpawnEnemyWave(waveNumber);
+            Instantiate(poweruprefabs, GenerateSpawnPosition(), poweruprefabs.transform.rotation);
+        }
     }
 
     void SpawnEnemyWave(int EnemiesToSpawn)
